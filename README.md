@@ -1,6 +1,6 @@
 # OmsInTheAir Base 2
 
-The second base for OmsInTheAir helps us to try all the components and calibrate the,
+The second base for OmsInTheAir helps us to try all the components and calibrate the components.
 
 ## Installation
 

@@ -94,23 +94,32 @@ body {
     overflow: auto;
     width: 40%;
     height: 35vh;
-    margin: 2.5% 5%;
-    border: 1px solid #adadad;
-    border-radius: 5px;
+    margin: 0 5%;
 }
 
-.logs::-webkit-scrollbar {
-    width: 2px;
+.delokos{
+    width: 33.33333%;
+    margin: 0% 0;
+    height: 7vh;
+    border-radius: 5px; 
+}
+.nene{
+    height: 50%;
+    width: 100%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 5px; 
 }
 
-.logs::-webkit-scrollbar-track {
-    background: transparent;
-}
+.datos{
+    height: 50%;
+    background-color: white;
+    width: 100%;
+    font-weight: bold;
+    font-size: 13px;
 
-.logs::-webkit-scrollbar-thumb {
-    background-color: #adadad;
 
-    outline: 1px solid slategrey;
 }
 
 .map {
@@ -134,8 +143,8 @@ body {
 }
 
 .motor {
-    width: 30vh;
-    height: 30vh;
+    width: 25vh;
+    height: 25vh;
     background: rgb(43, 46, 94);
     border-radius: 100%;
     box-shadow: 0px 0px 20px 1px rgb(43, 46, 94);
@@ -158,11 +167,11 @@ body {
 
 .angle {
     font-size: 30px;
-    width: 10%;
+    width: 5%;
 }
 
 .spacer {
-    width: calc(100% - 60vh - 20vw - 15vw);
+    width: calc(100% - 50vh - 10vw - 15vw);
     height: 40vh;
 }
 

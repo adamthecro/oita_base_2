@@ -101,7 +101,6 @@ var airplane = {
 };
 
 var client = {
-  "phase": 0,
   "m1": 0,
   "m2": 0,
   "s1": 0,
@@ -179,7 +178,6 @@ apps.get("/plane", function (req, res) {
 });
 apps.use("/", express.static(__dirname + '/apps'));
 
-
 server.listen(3000);
 
 io.on("connect", function (socket) {
@@ -191,7 +189,11 @@ io.on("connect", function (socket) {
   socket.on("disconnect", function () {
     console.log("Disconnected: " + socket.id);
   });
+  socket.on("datatoplane", function (data) {
+    client = data;
+  });
 });
+
 /*
 // Importem la llibreria per la comunicació IPC que ens permet comunicar el backend amb el frontend
 const {

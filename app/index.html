@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="assets/leaflet.css">
-    <title>Nose la vd</title>
+    <title>OmsInTheAir</title>
 </head>
 
 <body class="alcentre">
@@ -23,13 +23,80 @@
             <div class="commbut alcentre" onclick="commbutf(3)">LoRa</div>
             <div class="commbutr alcentre" onclick="commbutf(99)">Reboot</div>
         </div>
+
         <div class="data alcentre">
-            <div class="logs alcentre">
-                <div id="logs" style="width: 100%;height: 100%;padding: 10px;"></div>
-                <img src="" class="imgns" id="imgstream">
+            <div class="logs">
+                <!-- GLOBAL -->
+                <div class="alcentre"
+                    style="background-color: rgb(0, 0, 0); border: 1px solid rgb(26, 21, 49); border-radius:5px;">
+
+                    <div class="delokos">
+                        <div class="alcentre nene">Pitch G</div>
+                        <div id="pg" class="alcentre datos" style="border-bottom-left-radius: 5px; ">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Roll G</div>
+                        <div id="rg" class="alcentre datos">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Yaw G</div>
+                        <div id="yg" class="alcentre datos" style="border-bottom-right-radius: 5px; ">Nan</div>
+                    </div>
+                </div><!-- MPU1 -->
+                <div class="alcentre"
+                    style="background-color: rgb(18, 45, 59); border: 1px solid rgb(26, 21, 49); border-radius:5px;margin-top: 1.75vh;">
+
+                    <div class="delokos">
+                        <div class="alcentre nene">Pitch 1</div>
+                        <div id="p1" class="alcentre datos" style="border-bottom-left-radius: 5px; ">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Roll 1</div>
+                        <div id="r1" class="alcentre datos">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Yaw 1</div>
+                        <div id="y1" class="alcentre datos" style="border-bottom-right-radius: 5px; ">Nan</div>
+                    </div>
+                </div>
+                <!-- MPU2 -->
+                <div class="alcentre"
+                    style="background-color: rgb(19, 54, 27); border: 1px solid rgb(26, 21, 49); border-radius:5px;margin-top: 1.75vh;">
+
+                    <div class="delokos">
+                        <div class="alcentre nene">Pitch 2</div>
+                        <div id="p2" class="alcentre datos" style="border-bottom-left-radius: 5px; ">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Roll 2</div>
+                        <div id="r2" class="alcentre datos">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Yaw 2</div>
+                        <div id="y2" class="alcentre datos" style="border-bottom-right-radius: 5px; ">Nan</div>
+                    </div>
+                </div>
+                <!-- MPU3 -->
+                <div class="alcentre"
+                    style="background-color: rgb(66, 28, 27); border: 1px solid rgb(26, 21, 49); border-radius:5px;margin-top: 1.75vh;">
+
+                    <div class="delokos">
+                        <div class="alcentre nene">Pitch 3</div>
+                        <div id="p3" class="alcentre datos" style="border-bottom-left-radius: 5px; ">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Roll 3</div>
+                        <div id="r3" class="alcentre datos">Nan</div>
+                    </div>
+                    <div class="delokos">
+                        <div class="alcentre nene">Yaw 3</div>
+                        <div id="y3" class="alcentre datos" style="border-bottom-right-radius: 5px; ">Nan</div>
+                    </div>
+                </div>
             </div>
             <div class="map" id="map_id"></div>
         </div>
+
         <div class="motors alcentre">
             <div class="motor alcentre">
                 <div>
@@ -41,7 +108,7 @@
             </div>
             <div class="angle alcentre" id="m1servo">60º</div>
             <div class="spacer alcentre" id="spacer">
-                <div id="stl_cont" style="width:100%;height:100%;margin-left:5%;"></div>
+                <div id="stl_cont" style="width:100%;height:100%;margin-left:5%;" class="avionsito"></div>
             </div>
             <div class="angle alcentre" id="m2servo">60º</div>
             <div class="motor alcentre">
@@ -74,78 +141,96 @@
     </div>
 </body>
 <script src="assets/jquery.js"></script>
-<script src="assets/leaflet.js"></script>
-<script src="assets/maps.js"></script>
-<script src="assets/gamepad.js"></script>
-<script src="assets/socketio.js"></script>
 <script src="stl_render/stl_viewer.min.js"></script>
 <script>
-    /*var socket = io("http://127.0.0.1:3000", {
-        path: '/'
-    });
-    socket.on('planedata', function (msg) {
-        document.getElementById("logs").innerHTML = document.getElementById("logs").innerHTML + msg;
-        document.getElementById("m1servo").innerHTML = msg["s1"];
-        document.getElementById("m2servo").innerHTML = msg["s2"];
-        document.getElementById("lservo").innerHTML = msg["s3"];
-        document.getElementById("rservo").innerHTML = msg["s4"];
-        document.getElementById("pservo").innerHTML = msg["s5"];
-        document.getElementById("vservo").innerHTML = msg["s6"];
-        document.getElementById("hservo").innerHTML = msg["s7"];
-        mymap.flyTo([msg["lat"], msg["long"]], 14)
-        var data = {
-            "phase": 0,
-            "m1": 0,
-            "m2": 0,
-            "s1": 0,
-            "s2": 0,
-            "s3": 0,
-            "s4": 0,
-            "s5": 0,
-            "s6": 0,
-            "s7": 0,
-        };
 
-        socket.emit("data",)
-    });*/
-</script>
-<script>
-    var l_pitch = 0;
-    var l_roll = 0;
-    var l_yaw = 0;
-    var r_pitch = 0;
-    var r_roll = 0;
-    var r_yaw = 0; var stl_viewer = new StlViewer(
+    var pitch_m1 = 0;
+    var pitch_m2 = 0;
+    var pitch_m3 = 0;
+    var pitch_gi = 0;
+    var roll_m1 = 0;
+    var roll_m2 = 0;
+    var roll_m3 = 0;
+    var roll_gi = 0;
+    var yaw_m1 = 0;
+    var yaw_m2 = 0;
+    var yaw_m3 = 0;
+    var yaw_gi = 0;
+    var stl_viewer = new StlViewer(
         document.getElementById("stl_cont"), {
         allow_drag_and_drop: false,
         models: [{
             id: 0,
             filename: "yeye.STL",
             opacity: 0.8,
-            z: 10,
+            z: 1,
             color: "#000",
             view_edges: true
         }, {
             id: 1,
             filename: "yeye.STL",
-            opacity: 0.3,
-            z: 10,
-            color: "#BF4141",
+            opacity: 0.5,
+            z: 1,
+            color: "#122D3B",
         }, {
             id: 2,
             filename: "yeye.STL",
-            opacity: 0.3,
-            z: 10,
-            color: "#63BF41",
+            opacity: 0.5,
+            z: 1,
+            color: "#13361B",
         }, {
             id: 3,
             filename: "yeye.STL",
-            opacity: 0.3,
-            z: 10,
-            color: "#41A0BF",
+            opacity: 0.5,
+            z: 1,
+            color: "#421C1B",
         },]
     }
     );
+</script>
+<script src="assets/leaflet.js"></script>
+<script src="assets/maps.js"></script>
+<script src="assets/gamepad.js"></script>
+<script src="assets/socketio.js"></script>
+<script>
+    var socket = io("http://localhost:3000");
+    setTimeout(function () {
+        socket.on('planedata', function (msg) {
+            stl_viewer.rotate(0, msg["pitch_gi"] - pitch_gi, msg["yaw_gi"] - yaw_gi, msg["roll_gi"] - roll_gi);
+            stl_viewer.rotate(1, msg["pitch_m1"] - pitch_m1, msg["yaw_m1"] - yaw_m1, msg["roll_m1"] - roll_m1);
+            stl_viewer.rotate(2, msg["pitch_m2"] - pitch_m2, msg["yaw_m2"] - yaw_m2, msg["roll_m2"] - roll_m2);
+            stl_viewer.rotate(3, msg["pitch_m3"] - pitch_m3, msg["yaw_m3"] - yaw_m3, msg["roll_m3"] - roll_m3);
+
+            pitch_m1 = msg["pitch_m1"];
+            pitch_m2 = msg["pitch_m2"];
+            pitch_m3 = msg["pitch_m3"];
+            pitch_gi = msg["pitch_gi"];
+            roll_m1 = msg["roll_m1"];
+            roll_m2 = msg["roll_m2"];
+            roll_m3 = msg["roll_m3"];
+            roll_gi = msg["roll_gi"];
+            yaw_m1 = msg["yaw_m1"];
+            yaw_m2 = msg["yaw_m2"];
+            yaw_m3 = msg["yaw_m3"];
+            yaw_gi = msg["yaw_gi"];
+
+            document.getElementById("pg").innerHTML = msg["pitch_gi"];
+            document.getElementById("rg").innerHTML = msg["roll_gi"];
+            document.getElementById("yg").innerHTML = msg["yaw_gi"];
+
+            document.getElementById("p1").innerHTML = msg["pitch_m1"];
+            document.getElementById("r1").innerHTML = msg["roll_m1"];
+            document.getElementById("y1").innerHTML = msg["yaw_m1"];
+
+            document.getElementById("p2").innerHTML = msg["pitch_m2"];
+            document.getElementById("r2").innerHTML = msg["roll_m2"];
+            document.getElementById("y2").innerHTML = msg["yaw_m2"];
+
+            document.getElementById("p3").innerHTML = msg["pitch_m3"];
+            document.getElementById("r3").innerHTML = msg["roll_m3"];
+            document.getElementById("y3").innerHTML = msg["yaw_m3"];
+        });
+    }, 1000);
 </script>
 
 </html>

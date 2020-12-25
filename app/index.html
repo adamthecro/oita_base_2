@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="leaflet.css">
+    <link rel="stylesheet" href="assets/leaflet.css">
     <title>Nose la vd</title>
 </head>
 
@@ -41,11 +41,7 @@
             </div>
             <div class="angle alcentre" id="m1servo">60º</div>
             <div class="spacer alcentre" id="spacer">
-                <div class="brujula alcentre" id="brujula">
-                    <div class="palo alcentre" id="palo">
-                        <div class="frontspeed" id="frontspeed"></div>
-                    </div>
-                </div>
+                <div id="stl_cont" style="width:100%;height:100%;margin-left:5%;"></div>
             </div>
             <div class="angle alcentre" id="m2servo">60º</div>
             <div class="motor alcentre">
@@ -77,13 +73,14 @@
         <div class="motorpowbar" id="rightmotor"></div>
     </div>
 </body>
-<script src="jquery.js"></script>
-<script src="leaflet.js"></script>
-<script src="maps.js"></script>
-<script src="gamepad.js"></script>
-<script src="https://cdn.socket.io/socket.io-2.3.0.js"></script>
+<script src="assets/jquery.js"></script>
+<script src="assets/leaflet.js"></script>
+<script src="assets/maps.js"></script>
+<script src="assets/gamepad.js"></script>
+<script src="assets/socketio.js"></script>
+<script src="stl_render/stl_viewer.min.js"></script>
 <script>
-    var socket = io("http://127.0.0.1:3000", {
+    /*var socket = io("http://127.0.0.1:3000", {
         path: '/'
     });
     socket.on('planedata', function (msg) {
@@ -109,8 +106,46 @@
             "s7": 0,
         };
 
-        socket.emit("data", )
-    });
+        socket.emit("data",)
+    });*/
+</script>
+<script>
+    var l_pitch = 0;
+    var l_roll = 0;
+    var l_yaw = 0;
+    var r_pitch = 0;
+    var r_roll = 0;
+    var r_yaw = 0; var stl_viewer = new StlViewer(
+        document.getElementById("stl_cont"), {
+        allow_drag_and_drop: false,
+        models: [{
+            id: 0,
+            filename: "yeye.STL",
+            opacity: 0.8,
+            z: 10,
+            color: "#000",
+            view_edges: true
+        }, {
+            id: 1,
+            filename: "yeye.STL",
+            opacity: 0.3,
+            z: 10,
+            color: "#BF4141",
+        }, {
+            id: 2,
+            filename: "yeye.STL",
+            opacity: 0.3,
+            z: 10,
+            color: "#63BF41",
+        }, {
+            id: 3,
+            filename: "yeye.STL",
+            opacity: 0.3,
+            z: 10,
+            color: "#41A0BF",
+        },]
+    }
+    );
 </script>
 
 </html>

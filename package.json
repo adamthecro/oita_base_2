@@ -18,6 +18,7 @@
     "electron": "^9.2.0"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
     "nodejs-websocket": "^1.7.2",
     "socket.io": "^2.3.0",

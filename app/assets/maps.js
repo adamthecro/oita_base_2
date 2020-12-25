@@ -5,7 +5,7 @@ var mymap;
 
 // Importem l'icona que farem servir per senyalitzar l'avió
 var ico_l = L.icon({
-    iconUrl: 'map-plane.png',
+    iconUrl: 'assets/map-plane.png',
     iconSize: [30, 30],
 });
 

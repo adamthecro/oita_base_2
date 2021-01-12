@@ -12,8 +12,8 @@
     "test",
     "app"
   ],
-  "author": "Adam El Messaoudi",
-  "license": "CC0-1.0",
+  "author": "Adam El Messaoudi Aarab",
+  "license": "MIT",
   "devDependencies": {
     "electron": "^9.2.0"
   },
